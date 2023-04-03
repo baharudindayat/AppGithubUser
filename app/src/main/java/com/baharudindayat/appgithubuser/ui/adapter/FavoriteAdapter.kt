@@ -1,5 +1,6 @@
 package com.baharudindayat.appgithubuser.ui.adapter
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.recyclerview.widget.RecyclerView
 import android.view.ViewGroup
@@ -37,7 +38,9 @@ class FavoriteAdapter: RecyclerView.Adapter<FavoriteAdapter.ViewHolder>() {
 
         viewHolder.itemView.setOnClickListener{
             val intent = Intent(viewHolder.itemView.context, DetailActivity::class.java)
-            intent.putExtra("USERNAME", listFavorites[viewHolder.adapterPosition])
+            intent.putExtra("USERNAME", listFavorites[viewHolder.adapterPosition].login)
+            intent.putExtra("ID",listFavorites[viewHolder.adapterPosition].id)
+            intent.putExtra("AVATAR",listFavorites[viewHolder.adapterPosition].avatar_url)
             viewHolder.itemView.context.startActivity(intent)
         }
     }
@@ -49,25 +52,15 @@ class FavoriteAdapter: RecyclerView.Adapter<FavoriteAdapter.ViewHolder>() {
         val ivProfile: ImageView = view.findViewById(R.id.ivProfile)
     }
 
-//    fun setListFavorite(listFavorites: ArrayList<FavoriteUser>) {
-//        val diffCallback = FavoriteDiffCallback(this.listFavorites,listFavorites)
-//        val diffResult = DiffUtil.calculateDiff(diffCallback)
-//        this.listFavorites.clear()
-//        this.listFavorites.addAll(listFavorites)
-//        diffResult.dispatchUpdatesTo(this)
-//
-//    }
-
     fun setListFavorite(listFavorites: ArrayList<FavoriteUser>) {
-        if (listFavorites == null){
-            this.listFavorites.clear()
-            this.listFavorites.addAll(listFavorites)
-            notifyDataSetChanged()
-        }
-
-
+        val diffCallback = FavoriteDiffCallback(this.listFavorites,listFavorites)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+        this.listFavorites.clear()
+        this.listFavorites.addAll(listFavorites)
+        diffResult.dispatchUpdatesTo(this)
 
     }
+
 
     interface OnItemClickCallback {
         fun onItemClicked(data: FavoriteUser)

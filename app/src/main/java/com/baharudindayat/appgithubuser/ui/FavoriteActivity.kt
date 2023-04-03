@@ -34,10 +34,9 @@ class FavoriteActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val items = arrayListOf<ItemsItem>()
-        val favorite = arrayListOf<FavoriteUser>()
         mainAdapter = MainAdapter(items)
         adapter = FavoriteAdapter()
-        mainAdapter.notifyDataSetChanged()
+        adapter.notifyDataSetChanged()
 
 
         val layoutManager = LinearLayoutManager(this)
@@ -45,30 +44,9 @@ class FavoriteActivity : AppCompatActivity() {
         val itemDecoration = DividerItemDecoration(this, layoutManager.orientation)
         binding.rvItem.addItemDecoration(itemDecoration)
 
-//        detailViewModel.favorite.observe(this){listFav ->
-//            if (listFav != null){
-//                adapter.setListFavorite(listFav as ArrayList<FavoriteUser>)
-//            }
-//            binding.rvItem.adapter = adapter
-//        }
-
-
-//        favoriteViewModel.getFavoriteUser()?.observe(this){ listFav ->
-//            if (listFav != null){
-//                adapter.setListFavorite(listFav as ArrayList<FavoriteUser>)
-//            }
-//            binding.rvItem.adapter = adapter
-//        }
-
-        favoriteViewModel.getFavoriteUser()?.observe(this){ users : List<FavoriteUser>? ->
-//            if (users != null){
-//                adapter.setListFavorite(users as ArrayList<FavoriteUser>)
-//            }
-            users?.map {
-                val item = ItemsItem(id = it.id, login = it.login, avatarUrl = it.avatar_url)
-                items.add(item)
-            }
-            binding.rvItem.adapter = mainAdapter
+        favoriteViewModel.getFavoriteUser()?.observe(this){ listFav ->
+            adapter.setListFavorite(listFav as ArrayList<FavoriteUser>)
+            binding.rvItem.adapter = adapter
         }
 
 
@@ -76,28 +54,12 @@ class FavoriteActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        detailViewModel.get()
         favoriteViewModel.getFavoriteUser()
 
-        favoriteViewModel.getFavoriteUser()?.observe(this){ users : List<FavoriteUser>? ->
-//            if (users != null){
-//                adapter.setListFavorite(users as ArrayList<FavoriteUser>)
-//            }
-            users?.map {
-                val items = arrayListOf<ItemsItem>()
-                val item = ItemsItem(id = it.id, login = it.login, avatarUrl = it.avatar_url)
-                items.add(item)
-                mainAdapter.setListFavorite(users as ArrayList<FavoriteUser>)
-            }
-            binding.rvItem.adapter = mainAdapter
+        favoriteViewModel.getFavoriteUser()?.observe(this){ listFav ->
+            adapter.setListFavorite(listFav as ArrayList<FavoriteUser>)
+            binding.rvItem.adapter = adapter
         }
-
-//        detailViewModel.favorite.observe(this){listFav ->
-//            if (listFav != null){
-//                adapter.setListFavorite(listFav as ArrayList<FavoriteUser>)
-//            }
-//            binding.rvItem.adapter = adapter
-//        }
     }
 
 }

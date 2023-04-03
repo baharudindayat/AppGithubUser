@@ -1,5 +1,3 @@
-@file:Suppress("DEPRECATION")
-
 package com.baharudindayat.appgithubuser.ui.detailfragment
 
 import android.os.Bundle
@@ -11,7 +9,6 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.baharudindayat.appgithubuser.data.remote.response.FollowersItem
-import com.baharudindayat.appgithubuser.data.remote.response.ItemsItem
 import com.baharudindayat.appgithubuser.databinding.FragmentFollowBinding
 import com.baharudindayat.appgithubuser.ui.adapter.FollowerAdapter
 import com.baharudindayat.appgithubuser.ui.viewmodel.FollowersViewModel
@@ -42,8 +39,7 @@ class FollowerFragment : Fragment() {
         val itemDecoration = DividerItemDecoration(requireActivity(), layoutManager.orientation)
         binding?.rvFollow?.addItemDecoration(itemDecoration)
 
-        val dataUsername = requireActivity().intent.getParcelableExtra<ItemsItem>("USERNAME") as ItemsItem
-        val username = dataUsername.login
+        val username = requireActivity().intent.getStringExtra("USERNAME").toString()
 
         followerViewModel.getFollowers(username)
 

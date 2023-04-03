@@ -1,5 +1,3 @@
-@file:Suppress("DEPRECATION")
-
 package com.baharudindayat.appgithubuser.ui.detailfragment
 
 import android.os.Bundle
@@ -41,8 +39,7 @@ class FollowingFragment : Fragment() {
         val itemDecoration = DividerItemDecoration(requireActivity(), layoutManager.orientation)
         binding?.rvFollow?.addItemDecoration(itemDecoration)
 
-        val dataUsername = requireActivity().intent.getParcelableExtra<ItemsItem>("USERNAME") as ItemsItem
-        val username = dataUsername.login
+        val username = requireActivity().intent.getStringExtra("USERNAME").toString()
 
 
         followingViewModel.getFollowing(username)

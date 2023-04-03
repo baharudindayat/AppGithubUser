@@ -11,7 +11,6 @@ import androidx.core.content.ContextCompat
 import com.baharudindayat.appgithubuser.R
 import com.baharudindayat.appgithubuser.data.local.entity.FavoriteUser
 import com.baharudindayat.appgithubuser.data.remote.response.DetailUser
-import com.baharudindayat.appgithubuser.data.remote.response.ItemsItem
 import com.baharudindayat.appgithubuser.databinding.ActivityDetailBinding
 import com.baharudindayat.appgithubuser.ui.adapter.SectionsPagerAdapter
 import com.baharudindayat.appgithubuser.ui.viewmodel.DetailViewModel
@@ -43,10 +42,9 @@ class DetailActivity : AppCompatActivity() {
         val viewPager = binding.viewPager
         val tabs = binding.tabs
 
-        val dataUsername = intent.getParcelableExtra<ItemsItem>("USERNAME") as ItemsItem
-        val id = dataUsername.id
-        val username = dataUsername.login
-        val avatar = dataUsername.avatarUrl
+        val id = intent.getIntExtra("ID", 0)
+        val username = intent.getStringExtra("USERNAME").toString()
+        val avatar = intent.getStringExtra("AVATAR").toString()
 
         var isChecked = false
         val detailFabFavorite = binding.detailFabFavorite
@@ -123,6 +121,9 @@ class DetailActivity : AppCompatActivity() {
     }
 
     companion object {
+        const val USERNAME = "extra_user"
+        const val ID = "extra_id"
+        const val AVATAR = "extra_avatar"
         @StringRes
         private val TAB_TITLES = intArrayOf(
             R.string.tab_text_1,

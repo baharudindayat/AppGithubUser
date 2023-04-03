@@ -38,7 +38,9 @@ class MainAdapter(private val listUser: List<ItemsItem>) : RecyclerView.Adapter<
 
         viewHolder.itemView.setOnClickListener{
             val intent = Intent(viewHolder.itemView.context, DetailActivity::class.java)
-            intent.putExtra("USERNAME", listUser[viewHolder.adapterPosition])
+            intent.putExtra("USERNAME", listUser[viewHolder.adapterPosition].login)
+            intent.putExtra("ID",listUser[viewHolder.adapterPosition].id)
+            intent.putExtra("AVATAR",listUser[viewHolder.adapterPosition].avatarUrl)
             viewHolder.itemView.context.startActivity(intent)
         }
     }
